@@ -1,6 +1,7 @@
 # reptDir: R package for annotating replication timing direction.
-
+<p align="center">
 <img src="example.png" alt="drawing" width="400" height="400"/>
+</p>
 
 ## Installation (requires the `devtools` package to be installed)
 In an R session:
@@ -9,7 +10,7 @@ devtools::install_github("https://github.com/MikeACG/reptDir")
 ```
 
 ## What algorithm is used to determine replication direction?
-The method used for assigning replication direction to each range is inspired by the descriptions of Morganella et al. (2016). For details, see `?reptDir`.
+The method used for assigning replication direction to each genomic range in the input is inspired by the descriptions of Morganella et al. (2016). For details, type `?reptDir` in a R session.
 
 ## Usage
 For a usage example see the vignette after installing the package:
