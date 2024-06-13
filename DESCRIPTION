@@ -1,0 +1,23 @@
+Package: reptDir
+Title: Annotate replication timing direction
+Version: 0.0.0.9000
+Authors@R: 
+    person("Miguel", "Cortés", , "A01270966@exatec.tec.mx", role = c("aut", "cre"),
+           )
+Description: determines the direction of replication timing domains from previously processed replication timing data found at popular resources such as the UCSC genome browser. Leading and lagging strand annotations are easily derived from the found directions across the genome.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+RdMacros: Rdpack
+Imports:
+    data.table,
+    Rdpack
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

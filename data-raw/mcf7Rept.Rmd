@@ -1,0 +1,19 @@
+### File download and parsing (08/11/22)
+```{bash}
+wget https://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeUwRepliSeqMcf7WaveSignalRep1.bigWig
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigToBedGraph
+chmod 777 bigWigToBedGraph
+./bigWigToBedGraph wgEncodeUwRepliSeqMcf7WaveSignalRep1.bigWig wgEncodeUwRepliSeqMcf7WaveSignalRep1.bedgraph
+mkdir -p wgEncodeUwRepliSeqMcf7WaveSignalRep1/
+awk -F'\t' '{print>"wgEncodeUwRepliSeqMcf7WaveSignalRep1/"$1}' wgEncodeUwRepliSeqMcf7WaveSignalRep1.bedgraph
+```
+### Save data into package
+```{r}
+library(data.table)
+
+mcf7Rept <- setNames(
+    fread("wgEncodeUwRepliSeqMcf7WaveSignalRep1/chr10", header = FALSE),
+    c("chr", "start", "end", "signal")
+)
+usethis::use_data(mcf7Rept)
+```

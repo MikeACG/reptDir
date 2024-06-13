@@ -1,0 +1,62 @@
+---
+title: "reptDir"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{reptDir}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document will show how to annotate a replication timing dataset with replication direction using the `reptDir` package. We will use an example dataset bundled with the package. First we load the data:
+```{r setup}
+library(reptDir)
+reptdt <- reptDir::mcf7Rept
+print(reptdt)
+```
+Note that the data is already formatted to match the intended input of the package (see `?reptDir` for details). Such data is conviniently found in popular resources such as the UCSC genome browser after processing the bigWig files. If you wish to check an example of how to load similar files into R, check the documentation under `data-raw/mcf7Rept.Rmd`
+
+We will need to define 2 parameters for the function that will do the job (see `?reptDir` for details). In particular, `minLen` is more intuitive to set because its simply the minimum of number of bases that we will require in a replication direction domain in order to consider whatever direction it has as trustworthy. The `minSlope` parameter can be trickier to set as different datasets can have different replication time signal units since these usually represent arbitrary quantities. Therefore, to set this argument, some trial and error might be required depending on how stringent one wishes to be with the assignments of direction and also on how much missing data one is willing to accept. Increasing the values of both parameters will result in increasing trustworthiness of direction assignments of the ranges that were actually assigned a direction but it will also increase the number of ranges for which no assignment is possible. After deciding the parameters, to get the assignments, one simply has to run:
+```{r main}
+minLen <- 250000
+minSlope <- 0.01
+reptdDT <- reptDir(reptdt, minLen, minSlope)
+print(reptdDT)
+```
+
+The columns of the output table are documented in the help page for `reptDir`. To visualize the directions of the found replication direction domains for a given region we can do something like the following:
+```{r plot, fig.height = 9, fig.width = 9}
+region <- c(16800000, 26080000) # 1-based, we will add 1 to the start column to make it 1-based
+isq2p <- reptdDT$direction == "q2p"
+isp2q <- reptdDT$direction == "p2q"
+.lwd <- 1.5
+
+plot(
+  reptdDT$start + 1L,
+  reptdDT$signal,
+  type = "l",
+  xlim = region,
+  ylim = c(15, 75),
+  xlab = "Genome position",
+  ylab = "Smoothed replication timing",
+  main = "MCF7 Chromosome 10",
+  lwd = .lwd
+)
+segments(reptdDT$start[isq2p] + 1L, reptdt$signal[isq2p], reptdt$end[isq2p], col = 3, lwd = .lwd)
+segments(reptdDT$start[isp2q] + 1L, reptdt$signal[isp2q], reptdt$end[isp2q], col = 2, lwd = .lwd)
+abline(v = seq(region[1], region[2], minLen), lty = 2, col = 8)
+legend(
+  "topleft",
+  c("uncertain", "p2q rep dir:\n+ = lagging, - = leading", "q2p rep dir:\n+ = leading, - = lagging"),
+  lwd = 2,
+  col = 1:3,
+  bg = "white",
+  y.intersp = 2
+)
+```
