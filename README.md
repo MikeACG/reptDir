@@ -1,6 +1,6 @@
 # reptDir: R package for annotating replication timing direction.
 
-<img src="example.png" alt="drawing" width="50" height="50"/>
+<img src="example.png" alt="drawing" width="400" height="400"/>
 
 ## Installation (requires the `devtools` package to be installed)
 In an R session:
