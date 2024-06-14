@@ -4,7 +4,7 @@
 </p>
 
 ## Installation (requires the `devtools` package to be installed)
-In an R session:
+In a R session:
 ```
 devtools::install_github("https://github.com/MikeACG/reptDir")
 ```
