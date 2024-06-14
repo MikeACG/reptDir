@@ -43,9 +43,9 @@
 #' The ranges are also assumed to be completely disjoint from one
 #' another. The replication signal is assumed to be processed
 #' already such that it meaningfully depicts the replication time profile of interest.
-#' Such data is tipically found already in this format in the
-#' UCSC genome browser for example. See the README at
-#' \url{https://github.com/MikeACG/reptTools} for a full usage example.
+#' Such data is typically found already in this format in the
+#' UCSC genome browser for example. See the `reptDir` vignette through
+#' `utils::browseVignettes("reptDir")` for a full usage example.
 #' @param minLen A scalar integer, minimum number of consecutive bases of direction domains.
 #' @param minSlope A scalar numeric, minimum slope at both sides of ranges to be included in direction domains.
 #'
